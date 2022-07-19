@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import SimpleNav from './components/Simplenav';
 function App() {
   // Make a request for a user with a given ID
   const [data, setData]               = useState();
@@ -11,7 +11,7 @@ function App() {
   const [count, setCount]             = useState(0);
 
   // Axios call to fetch data from backend
-  const responive                     =  axios.get('https://mighty-dusk-25399.herokuapp.com/')
+  const responive                     =  axios.get('http://localhost:3200') //change here before pushing to cloud -> https://mighty-dusk-25399.herokuapp.com/
     .then(function (response) {
       // Condition to check if data is fetched or not
       if (count === 0){
@@ -25,29 +25,23 @@ function App() {
         setData(response.data);
         setTest(response.data);
         setCount(count + 1);
-      },3000);
+      },9000);
     }
     })
 
     console.log(count);
-    console.log(responive,data);
+    //console.log(responive,data);
     const dataTitle = test.title;
     const dataMessage = test.message;
     const dataVersion = test.version;
-
-
+if (!data){
+  return <div>Loading...</div>
+}
+else{
   return (
     <div className="App">
       <header className="App-header">
-      <nav
-        style={{
-                  borderBottom: "solid 1px",
-                  paddingBottom: "1rem",
-                  fontColor: "white",
-                }}>
-            <Link to="/invoices">Invoices</Link> |{" "}
-            <Link to="/expenses">Expenses</Link>
-      </nav>
+      <SimpleNav/>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -69,6 +63,7 @@ function App() {
       </header>
     </div>
   );
+}
 }
 
 export default App;

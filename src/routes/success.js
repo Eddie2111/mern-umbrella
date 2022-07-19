@@ -1,6 +1,6 @@
 import '../App.css';
 import SimpleNav from '../components/Simplenav';
-export default function Invoices() {
+export default function Success() {
     return (
         <>
         <SimpleNav/>
@@ -13,14 +13,14 @@ export default function Invoices() {
     <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-primary">
           <p class="title">Vertical...</p>
-          <p class="subtitle">Top tile</p>
+          <p class="subtitle">SUCCESS!!</p>
         </article>
 
       </div>
       <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-primary">
           <p class="title">Vertical...</p>
-          <p class="subtitle">Top tile</p>
+          <p class="subtitle">SUCCESS!!</p>
         </article>
 
       </div>
