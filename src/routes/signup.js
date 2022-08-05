@@ -2,27 +2,29 @@ import { useState } from "react"
 import React from "react";
 import axios from "axios";
 import '../App.css';
+
 import SimpleNav from '../components/Simplenav';
 export default function Signup() {
-    const [fullname, setFullname] = useState("")
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 // this does not work since no axios → no data passing to backend → no next page
 // consider adding captcha here
-    interface FormDataType {fullname:string, email: email, password: string}
-    const responseBody: FormDataType = {fullname: "", email: "", password: ""}
+    interface FormDataType {name:string, email: email, password: string}
+    const responseBody: FormDataType = {name: "", email: "", password: ""}
 
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        responseBody.fullname = fullname
+        responseBody.name = name
         responseBody.email = email
         responseBody.password = password
         // axios should be from here //
         axios.post("http://localhost:3200/signup", responseBody)
-            .then(res => {
+            .then((res) => {
                 const status = (res.data.status)
+                console.log(res.data)
                 if (status === 200) {
-                    window.location.href = "/login"
+                    window.location.href = res.data.route //"/login"
                 }
             }
             )
@@ -37,6 +39,7 @@ export default function Signup() {
     const inputChangeHandler = (setFunction: React.Dispatch<React.SetStateAction<string>>, event: React.ChangeEvent<HTMLInputElement>) => {
         setFunction(event.target.value)
     }
+    
   
     return(
         <>
@@ -51,8 +54,8 @@ export default function Signup() {
             
         <form onSubmit={onSubmitHandler}>
         <div className="field">
-            <div><label htmlFor="fullname">First Name</label></div>
-            <div><input className="input" id="fullname" onChange={(e)=>inputChangeHandler(setFullname, e)} type="text"/></div>
+            <div><label htmlFor="name">First Name</label></div>
+            <div><input className="input" id="name" onChange={(e)=>inputChangeHandler(setName, e)} type="text"/></div>
         </div>
         <div className="field">
             <div><label htmlFor="email">Email</label></div>
@@ -63,7 +66,7 @@ export default function Signup() {
             <div><input id="password" className="input" onChange={(e)=>inputChangeHandler(setPassword, e)} type="password"/></div>
         </div>
             <button type="submit" className="button is-success">Sign up</button>
-            <button to="/login" class="button is-success">Login</button>
+            <button to="/login" className="button is-success">Login</button>
         </form>
         
         </div>
