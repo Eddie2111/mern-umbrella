@@ -11,7 +11,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   // Axios call to fetch data from backend
-  const responive         =  axios.get('http://localhost:3200') // {withCredentials:true} //change here before pushing to cloud -> https://mighty-dusk-25399.herokuapp.com/
+  const responive         =  axios.get('https://mighty-dusk-25399.herokuapp.com/') // {withCredentials:true} //change here before pushing to cloud -> https://mighty-dusk-25399.herokuapp.com/
     .then(function (response) {
       // Condition to check if data is fetched or not
       if (count === 0){
