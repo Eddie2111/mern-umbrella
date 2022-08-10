@@ -22,7 +22,7 @@ export default function Login() {
         responseBody.password = password
         
         // axios should be from here //
-        axios.post("http://localhost:3200/login", responseBody)
+        axios.post("https://mighty-dusk-25399.herokuapp.com/login", responseBody)
             .then(res => {
                 console.log(res.data);
                 setNotification(1);
