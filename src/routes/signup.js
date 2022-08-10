@@ -19,7 +19,7 @@ export default function Signup() {
         responseBody.email = email
         responseBody.password = password
         // axios should be from here //
-        axios.post("http://localhost:3200/signup", responseBody)
+        axios.post("https://mighty-dusk-25399.herokuapp.com/signup", responseBody)
             .then((res) => {
                 const status = (res.data.status)
                 console.log(res.data)
