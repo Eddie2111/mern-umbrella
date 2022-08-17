@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter,Route,Routes } from "react-router-dom";
+
+// routes and pages
 import Expenses from "./routes/expenses";
 import Invoices from "./routes/invoices";
 import Signup from "./routes/signup";
@@ -12,6 +14,7 @@ import Home from "./routes/home";
 import ProfileUpdate from "./routes/firsttime/profileUpdate";
 import NotFound from "./routes/notFound";
 import Test from './routes/Test';
+//import localStorage from "localstorage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

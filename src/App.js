@@ -11,7 +11,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   // Axios call to fetch data from backend
-  const responive         =  axios.get('https://mighty-dusk-25399.herokuapp.com/') // {withCredentials:true} //change here before pushing to cloud -> https://mighty-dusk-25399.herokuapp.com/
+  const responive         =  axios.get('http://localhost:3200') // {withCredentials:true} //change here before pushing to cloud -> https://mighty-dusk-25399.herokuapp.com/
     .then(function (response) {
       // Condition to check if data is fetched or not
       if (count === 0){
@@ -21,19 +21,16 @@ function App() {
       }
       // Axios burst requests to backend to get data, if data is already fetched, it will fetch data from cache
       if (count > 0){
-      setTimeout(() =>  {
-        setData(response.data);
-        setTest(response.data);
-        setCount(count + 1);
-      },9000);
+
     }
     })
 
     console.log(count);
     console.log(responive);
-    const dataTitle = test.title;
+    const dataTitle   = test.title;
     const dataMessage = test.message;
     const dataVersion = test.version;
+    const dataDate    = test.date;
 if (!data){
   return <div>Loading...</div>
 }
@@ -58,6 +55,7 @@ else{
         <p>Name of the app: {dataTitle}</p>
         <p>Message from Backend: {dataMessage}</p>
         <p>Version of the app: {dataVersion}</p>
+        <p>Date version of Backend: {dataDate}</p>
 
         
       </header>

@@ -3,36 +3,57 @@ import React from "react";
 import axios from "axios";
 import '../App.css';
 import SimpleNav from '../components/Simplenav';
-import Modal, { useModalState } from "react-simple-modal-provider";
+//import Modal, { useModalState } from "react-simple-modal-provider";
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const { isOpen, setOpen } = useModalState();
-    const [notification, setNotification] = useState(0);
-    const [notificationMessage, setNotificationMessage] = useState("");
-// this does not work since no axios → no data passing to backend → no next page
+    const [attempt, setAttempt] = useState(0);
+    const [card,setCard] = useState("cardDeactive");
+    const [message,setMessage] = useState("");
+    const reset = ()=> {
+    setTimeout(() => {
+        setMessage("");
+        setCard("cardDeactive");
+      }, 3000);
+    }
+    const Ireset = ()=> {
+        setMessage("");
+        setCard("cardDeactive");  
+        }
 // consider adding captcha here
     interface FormDataType { email: email, password: string}
     const responseBody: FormDataType = { email: "", password: ""}
-    const children="this is example message";
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         responseBody.email = email
         responseBody.password = password
         
         // axios should be from here //
-        axios.post("https://mighty-dusk-25399.herokuapp.com/login", responseBody)
+        if (attempt<3) {
+        axios.post("http://localhost:3200/login", responseBody)
             .then(res => {
-                console.log(res.data);
-                setNotification(1);
-                setNotificationMessage(res.data.message);
+                // console.log(res.data);
+                setMessage(res.data.message);
+                setCard("cardActive");
+                reset();
+                setAttempt(attempt+1);
                 if (res.data.status === 200) {
                     window.location.href = res.data.route //"/login"
                 }
             }
             )
-        
+            .catch(err => {
+                setMessage("not connected to network");
+                setCard("cardActive");
+                reset();
+            })
+        }
+        else {
+            setMessage("too many attempts");
+            setCard("cardActive");
+            reset();
+        }
         //console.log(JSON.stringify(responseBody))
 	//Form submission happens here
     }
@@ -63,7 +84,7 @@ export default function Login() {
             <button type="submit" id="login" className="button is-success">Login</button>
             <a href="/forgot" className="button is-danger">Forgot Password?</a>
         </form>
-        
+        <div onClick={Ireset} className={card}>{message}</div>
         </div>
         </div>
         

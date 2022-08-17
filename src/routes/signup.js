@@ -8,6 +8,18 @@ export default function Signup() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [card,setCard] = useState("cardDeactive");
+    const [message,setMessage] = useState("");
+    const reset = ()=> {
+    setTimeout(() => {
+        setMessage("");
+        setCard("cardDeactive");
+      }, 3000);
+    }
+    const Ireset = ()=> {
+        setMessage("");
+        setCard("cardDeactive");  
+        }
 // this does not work since no axios → no data passing to backend → no next page
 // consider adding captcha here
     interface FormDataType {name:string, email: email, password: string}
@@ -19,10 +31,12 @@ export default function Signup() {
         responseBody.email = email
         responseBody.password = password
         // axios should be from here //
-        axios.post("https://mighty-dusk-25399.herokuapp.com/signup", responseBody)
+        axios.post("http://localhost:3200/signup", responseBody)
             .then((res) => {
                 const status = (res.data.status)
                 console.log(res.data)
+                setMessage(res.data.message);
+                reset();
                 if (status === 200) {
                     window.location.href = res.data.route //"/login"
                 }
@@ -30,6 +44,7 @@ export default function Signup() {
             )
             .catch((err) => {
                 console.log(err)
+                setMessage(err)
             }
             )
         
@@ -55,19 +70,20 @@ export default function Signup() {
         <form onSubmit={onSubmitHandler}>
         <div className="field">
             <div><label htmlFor="name">First Name</label></div>
-            <div><input className="input" id="name" onChange={(e)=>inputChangeHandler(setName, e)} type="text"/></div>
+            <div><input required className="input" id="name" onChange={(e)=>inputChangeHandler(setName, e)} type="text"/></div>
         </div>
         <div className="field">
             <div><label htmlFor="email">Email</label></div>
-            <div><input id="email" className="input" onChange={(e)=>inputChangeHandler(setEmail, e)} type="text"/></div>
+            <div><input required id="email" className="input" onChange={(e)=>inputChangeHandler(setEmail, e)} type="text"/></div>
         </div>
         <div className="field">
             <div><label htmlFor="password">Password</label></div>
-            <div><input id="password" className="input" onChange={(e)=>inputChangeHandler(setPassword, e)} type="password"/></div>
+            <div><input required id="password" className="input" onChange={(e)=>inputChangeHandler(setPassword, e)} type="password"/></div>
         </div>
             <button type="submit" className="button is-success">Sign up</button>
             <button to="/login" className="button is-success">Login</button>
         </form>
+        <div onClick={Ireset} className={card}>{message}</div>
         
         </div>
         </div>
